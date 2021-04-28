@@ -4,9 +4,12 @@ namespace Tests\Feature\Http\Controllers;
 
 use App\User;
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Hash;
+use App\Http\Requests\UserUpdateRequest;
+use App\Http\Controllers\UsersController;
+use Illuminate\Foundation\Testing\WithFaker;
+use JMac\Testing\Traits\AdditionalAssertions;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class UsersControllerTest extends TestCase
 {
@@ -69,5 +72,15 @@ class UsersControllerTest extends TestCase
         $response->assertRedirect(route('user.edit'));
         $response->assertSessionHasErrors('password');
         $this->assertNotNull($user->name);
+    }
+
+    /** @test */
+    public function updates_uses_validation()
+    {
+        $this->assertActionUsesFormRequest(
+            UsersController::class,
+            'update',
+            UserUpdateRequest::class,
+        );
     }
 }
