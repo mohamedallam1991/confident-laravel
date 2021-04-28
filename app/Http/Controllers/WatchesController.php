@@ -20,7 +20,7 @@ class WatchesController extends Controller
             'video_id' => $request->get('video_id')
         ]);
 
-         Log::info('video.watched', [$request->get('video_id')]);
+         event('video.watched', [$request->get('video_id')]);
 
         return response(null, 204);
     }
