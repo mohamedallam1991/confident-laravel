@@ -15,19 +15,17 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 class OrderControllerTest extends TestCase
 {
     use RefreshDatabase, WithFaker;
+
     /** @test */
     public function purchase_a_course()
     {
         $this->withoutExceptionHandling();
         $event = Event::fake();
         $mail = Mail::fake();
-
         $product = factory(Product::class)->create();
         $token = $this->faker->md5;
 
-
         $paymentGateway = $this->mock(PaymentGateway::class);
-
         $paymentGateway->shouldReceive('charge')
             ->with($token, \Mockery::type(Order::class))
             ->andReturn('charge-id');
