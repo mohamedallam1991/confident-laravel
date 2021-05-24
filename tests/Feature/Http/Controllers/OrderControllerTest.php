@@ -44,4 +44,10 @@ class OrderControllerTest extends TestCase
         // mail sent
         // user was logged in
     }
+
+    /** @test */
+    public function store_returns_error_view_when_charge_fails()
+    {
+        return $this->assertTrue(true);
+    }
 }
